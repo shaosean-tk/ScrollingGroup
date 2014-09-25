@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2013r3.2" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Window" ID="1255505739">
+ <ObjName>ScrollingGroup</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>ContainerControl</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>AddRow</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub AddRow(container As ContainerControl)</SourceLine>
+   <SourceLine>self.mContainers.Append container</SourceLine>
+   <SourceLine>container.EmbedWithin self.Viewer, 0, ((UBound(self.mContainers) * container.Height) - self.Scroller.Value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.UpdateScroller</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>container As ContainerControl</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>UpdateScroller</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub UpdateScroller()</SourceLine>
+   <SourceLine>self.Scroller.PageStep = (self.Viewer.Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (self.Count = 0) then</SourceLine>
+   <SourceLine>self.Scroller.Maximum = 0</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>DIM containerHeight As Integer = self.mContainers(0).Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (self.Viewer.Height &lt; (self.Count * containerHeight)) then</SourceLine>
+   <SourceLine>self.Scroller.Maximum = ((self.Count * containerHeight) - self.Viewer.Height)</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>self.Scroller.Maximum = 0</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Property>
+  <ItemName>mContainers()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mContainers() As ContainerControl</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mContainers() As ContainerControl</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>Count</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Count As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Count As Integer</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return UBound(self.mContainers) + 1</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <PropertyVal Name="Transparent">True</PropertyVal>
+ <PropertyVal Name="EraseBackground">True</PropertyVal>
+ <PropertyVal Name="AcceptTabs">True</PropertyVal>
+ <PropertyVal Name="AcceptFocus">False</PropertyVal>
+ <PropertyVal Name="Backdrop">0</PropertyVal>
+ <PropertyVal Name="BackColor"><Hex bytes="8">3136373737323135</Hex></PropertyVal>
+ <PropertyVal Name="HasBackColor">False</PropertyVal>
+ <PropertyVal Name="UseFocusRing">False</PropertyVal>
+ <PropertyVal Name="HelpTag"></PropertyVal>
+ <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+ <PropertyVal Name="Enabled">True</PropertyVal>
+ <PropertyVal Name="Visible">True</PropertyVal>
+ <PropertyVal Name="TabStop">True</PropertyVal>
+ <PropertyVal Name="TabIndex"><Hex bytes="1">30</Hex></PropertyVal>
+ <PropertyVal Name="TabPanelIndex"><Hex bytes="1">30</Hex></PropertyVal>
+ <PropertyVal Name="LockBottom">True</PropertyVal>
+ <PropertyVal Name="LockRight">True</PropertyVal>
+ <PropertyVal Name="LockTop">True</PropertyVal>
+ <PropertyVal Name="LockLeft">True</PropertyVal>
+ <PropertyVal Name="Height"><Hex bytes="3">333030</Hex></PropertyVal>
+ <PropertyVal Name="Width"><Hex bytes="3">333030</Hex></PropertyVal>
+ <PropertyVal Name="Top"><Hex bytes="1">30</Hex></PropertyVal>
+ <PropertyVal Name="Left"><Hex bytes="1">30</Hex></PropertyVal>
+ <PropertyVal Name="InitialParent"></PropertyVal>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>InitialParent</ObjName>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Width</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>300</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Height</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>300</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LockLeft</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LockTop</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LockRight</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LockBottom</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TabPanelIndex</ObjName>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TabIndex</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TabStop</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Visible</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Enabled</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AutoDeactivate</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HelpTag</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>UseFocusRing</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HasBackColor</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>BackColor</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>&amp;hFFFFFF</PropertyValue>
+   <ItemType>Color</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Backdrop</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <ItemType>Picture</ItemType>
+   <EditorType>Picture</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AcceptFocus</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>AcceptTabs</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>EraseBackground</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Transparent</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+ </ViewBehavior>
+ <ControlBehavior>
+  <Superclass>ScrollBar</Superclass>
+  <HookInstance>
+   <ItemName>ValueChanged</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub ValueChanged()</SourceLine>
+    <SourceLine>static scrollerValue As Integer</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>DIM delta As Integer = scrollerValue - me.Value</SourceLine>
+    <SourceLine>self.Viewer.Scroll 0, delta, 0, 0, self.Viewer.Width, self.Viewer.Height, TRUE</SourceLine>
+    <SourceLine>scrollerValue = me.Value</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>MouseWheel</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean</SourceLine>
+    <SourceLine>Me.Value = Me.Value + deltaY</SourceLine>
+    <SourceLine>End Function</SourceLine>
+   </ItemSource>
+  </HookInstance>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>Canvas</Superclass>
+  <HookInstance>
+   <ItemName>MouseWheel</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean</SourceLine>
+    <SourceLine>self.Scroller.Value = self.Scroller.Value + deltaY</SourceLine>
+    <SourceLine>End Function</SourceLine>
+   </ItemSource>
+  </HookInstance>
+ </ControlBehavior>
+ <Control>
+  <ControlClass>ScrollBar</ControlClass>
+  <ItemName>ScrollBar</ItemName>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="AcceptFocus">True</PropertyVal>
+  <PropertyVal Name="LiveScroll">True</PropertyVal>
+  <PropertyVal Name="PageStep"><Hex bytes="3">313130</Hex></PropertyVal>
+  <PropertyVal Name="LineStep"><Hex bytes="3">313130</Hex></PropertyVal>
+  <PropertyVal Name="Maximum"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="Value"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="Minimum"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabIndex"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="TabPanelIndex"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="LockBottom">True</PropertyVal>
+  <PropertyVal Name="LockRight">True</PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockLeft">False</PropertyVal>
+  <PropertyVal Name="Height"><Hex bytes="3">333030</Hex></PropertyVal>
+  <PropertyVal Name="Width"><Hex bytes="2">3136</Hex></PropertyVal>
+  <PropertyVal Name="Top"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="Left"><Hex bytes="3">323834</Hex></PropertyVal>
+  <PropertyVal Name="Scope">2</PropertyVal>
+  <PropertyVal Name="Super">ScrollBar</PropertyVal>
+  <PropertyVal Name="Index"><Hex bytes="11">2D32313437343833363438</Hex></PropertyVal>
+  <PropertyVal Name="Name">Scroller</PropertyVal>
+  <ControlIndex>0</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>Canvas</ControlClass>
+  <ItemName>Canvas</ItemName>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="Transparent">True</PropertyVal>
+  <PropertyVal Name="EraseBackground">True</PropertyVal>
+  <PropertyVal Name="DoubleBuffer">False</PropertyVal>
+  <PropertyVal Name="AcceptTabs">False</PropertyVal>
+  <PropertyVal Name="AcceptFocus">False</PropertyVal>
+  <PropertyVal Name="Backdrop">0</PropertyVal>
+  <PropertyVal Name="UseFocusRing">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabIndex"><Hex bytes="1">31</Hex></PropertyVal>
+  <PropertyVal Name="TabPanelIndex"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="LockBottom">True</PropertyVal>
+  <PropertyVal Name="LockRight">True</PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockLeft">True</PropertyVal>
+  <PropertyVal Name="Height"><Hex bytes="3">333030</Hex></PropertyVal>
+  <PropertyVal Name="Width"><Hex bytes="3">323834</Hex></PropertyVal>
+  <PropertyVal Name="Top"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="Left"><Hex bytes="1">30</Hex></PropertyVal>
+  <PropertyVal Name="Scope">2</PropertyVal>
+  <PropertyVal Name="Super">Canvas</PropertyVal>
+  <PropertyVal Name="Index"><Hex bytes="11">2D32313437343833363438</Hex></PropertyVal>
+  <PropertyVal Name="Name">Viewer</PropertyVal>
+  <ControlIndex>1</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+</block>
+</RBProject>
