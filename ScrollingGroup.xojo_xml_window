@@ -2,7 +2,7 @@
 <RBProject version="2013r3.2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Window" ID="1255505739">
  <ObjName>ScrollingGroup</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>330583064</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>ContainerControl</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -16,6 +16,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub AddRow(container As ContainerControl)</SourceLine>
    <SourceLine>self.mContainers.Append container</SourceLine>
+   <SourceLine>container.Width = self.Viewer.Width</SourceLine>
    <SourceLine>container.EmbedWithin self.Viewer, 0, ((UBound(self.mContainers) * container.Height) - self.Scroller.Value)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>self.UpdateScroller</SourceLine>
@@ -58,20 +59,6 @@
   <ItemResult></ItemResult>
  </Method>
  <Property>
-  <ItemName>mContainers()</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>mContainers() As ContainerControl</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>mContainers() As ContainerControl</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
   <ItemName>Count</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -96,6 +83,20 @@
    <SourceLine>Return UBound(self.mContainers) + 1</SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mContainers()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mContainers() As ContainerControl</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mContainers() As ContainerControl</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
  </Property>
  <PropertyVal Name="Transparent">True</PropertyVal>
  <PropertyVal Name="EraseBackground">True</PropertyVal>
@@ -123,105 +124,17 @@
  <PropertyVal Name="InitialParent"></PropertyVal>
  <ViewBehavior>
   <ViewProperty>
-   <ObjName>Name</ObjName>
+   <ObjName>AcceptFocus</ObjName>
    <Visible>1</Visible>
-   <PropertyGroup>ID</PropertyGroup>
-   <ItemType>String</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Super</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>ID</PropertyGroup>
-   <ItemType>String</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>InitialParent</ObjName>
-   <PropertyGroup>Position</PropertyGroup>
-   <ItemType>String</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Left</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Top</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Width</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <PropertyValue>300</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Height</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <PropertyValue>300</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>LockLeft</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>LockTop</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>LockRight</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>LockBottom</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>TabPanelIndex</ObjName>
-   <PropertyGroup>Position</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>TabIndex</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>TabStop</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Position</PropertyGroup>
-   <PropertyValue>True</PropertyValue>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
    <EditorType>Boolean</EditorType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>Visible</ObjName>
+   <ObjName>AcceptTabs</ObjName>
    <Visible>1</Visible>
-   <PropertyGroup>Appearance</PropertyGroup>
-   <PropertyValue>True</PropertyValue>
-   <ItemType>Boolean</ItemType>
-   <EditorType>Boolean</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Enabled</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>True</PropertyValue>
    <ItemType>Boolean</ItemType>
    <EditorType>Boolean</EditorType>
@@ -231,27 +144,6 @@
    <Visible>1</Visible>
    <PropertyGroup>Appearance</PropertyGroup>
    <PropertyValue>True</PropertyValue>
-   <ItemType>Boolean</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>HelpTag</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Appearance</PropertyGroup>
-   <ItemType>String</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>UseFocusRing</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Appearance</PropertyGroup>
-   <PropertyValue>False</PropertyValue>
-   <ItemType>Boolean</ItemType>
-   <EditorType>Boolean</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>HasBackColor</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Appearance</PropertyGroup>
-   <PropertyValue>False</PropertyValue>
    <ItemType>Boolean</ItemType>
   </ViewProperty>
   <ViewProperty>
@@ -269,17 +161,9 @@
    <EditorType>Picture</EditorType>
   </ViewProperty>
   <ViewProperty>
-   <ObjName>AcceptFocus</ObjName>
+   <ObjName>Enabled</ObjName>
    <Visible>1</Visible>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>False</PropertyValue>
-   <ItemType>Boolean</ItemType>
-   <EditorType>Boolean</EditorType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>AcceptTabs</ObjName>
-   <Visible>1</Visible>
-   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyGroup>Appearance</PropertyGroup>
    <PropertyValue>True</PropertyValue>
    <ItemType>Boolean</ItemType>
    <EditorType>Boolean</EditorType>
@@ -293,12 +177,129 @@
    <EditorType>Boolean</EditorType>
   </ViewProperty>
   <ViewProperty>
+   <ObjName>HasBackColor</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Height</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>300</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HelpTag</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>InitialParent</ObjName>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LockBottom</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LockLeft</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LockRight</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LockTop</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TabIndex</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TabPanelIndex</ObjName>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>TabStop</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
    <ObjName>Transparent</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>True</PropertyValue>
    <ItemType>Boolean</ItemType>
    <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>UseFocusRing</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Visible</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <EditorType>Boolean</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Width</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>300</PropertyValue>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
  <ControlBehavior>
