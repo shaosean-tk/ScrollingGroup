@@ -8,6 +8,35 @@
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>
+ <HookInstance>
+  <ItemName>MouseDown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function MouseDown(X As Integer, Y As Integer) As Boolean</SourceLine>
+   <SourceLine>#pragma Unused X</SourceLine>
+   <SourceLine>#pragma Unused Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return TRUE</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>MouseUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub MouseUp(X As Integer, Y As Integer)</SourceLine>
+   <SourceLine>#pragma Unused X</SourceLine>
+   <SourceLine>#pragma Unused Y</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.DeselectAll</SourceLine>
+   <SourceLine>self.Invalidate</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
  <Method>
   <ItemName>AddRow</ItemName>
   <Compatibility></Compatibility>
@@ -16,8 +45,10 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub AddRow(container As ContainerControl)</SourceLine>
    <SourceLine>self.mContainers.Append container</SourceLine>
-   <SourceLine>container.Width = self.Viewer.Width</SourceLine>
-   <SourceLine>container.EmbedWithin self.Viewer, 0, ((UBound(self.mContainers) * container.Height) - self.Scroller.Value)</SourceLine>
+   <SourceLine>container.EmbedWithin self.Viewer, 0, ((UBound(self.mContainers) * container.Height) - self.Scroller.Value), self.Viewer.Width</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>AddHandler container.MouseUp, WeakAddressOf MouseUpHandler</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>self.UpdateScroller</SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -48,6 +79,74 @@
    <SourceLine>else</SourceLine>
    <SourceLine>self.Scroller.Maximum = 0</SourceLine>
    <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RowFromXY</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function RowFromXY(x As Integer, y As Integer) As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>x As Integer, y As Integer</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MouseUpHandler</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub MouseUpHandler(container As ContainerControl, x As Integer, y As Integer)</SourceLine>
+   <SourceLine>self.ListIndex = self.mContainers.IndexOf(container)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' self.DeselectAll</SourceLine>
+   <SourceLine>' </SourceLine>
+   <SourceLine>' if (container IsA ScrollingGroupRowInterface) then</SourceLine>
+   <SourceLine>' ScrollingGroupRowInterface(container).IsSelected = TRUE</SourceLine>
+   <SourceLine>' end if</SourceLine>
+   <SourceLine>' </SourceLine>
+   <SourceLine>' self.Invalidate</SourceLine>
+   <SourceLine>' </SourceLine>
+   <SourceLine>' self.mListIndex = self.mContainers.IndexOf(container)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>container As ContainerControl, x As Integer, y As Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DeselectAll</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DeselectAll()</SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
+   <SourceLine>if (self.mContainers(i) IsA ScrollingGroupRowInterface) then</SourceLine>
+   <SourceLine>ScrollingGroupRowInterface(self.mContainers(i)).IsSelected = FALSE</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -97,6 +196,54 @@
   <ItemDeclaration>mContainers() As ContainerControl</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>mListIndex</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mListIndex As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mListIndex As Integer</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>ListIndex</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>ListIndex As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ListIndex As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine>self.DeselectAll</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (value &lt;&gt; -1) AND (value &lt;= UBound(self.mContainers)) then</SourceLine>
+   <SourceLine>ScrollingGroupRowInterface(self.mContainers(value)).IsSelected = TRUE</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.Invalidate</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.mListIndex = value</SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return self.mListIndex</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
  </Property>
  <PropertyVal Name="Transparent">True</PropertyVal>
  <PropertyVal Name="EraseBackground">True</PropertyVal>
