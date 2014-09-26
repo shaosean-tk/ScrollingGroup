@@ -32,8 +32,7 @@
    <SourceLine>#pragma Unused X</SourceLine>
    <SourceLine>#pragma Unused Y</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>self.DeselectAll</SourceLine>
-   <SourceLine>self.Invalidate</SourceLine>
+   <SourceLine>self.ListIndex = -1</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
@@ -69,13 +68,11 @@
    <SourceLine>Sub UpdateScroller()</SourceLine>
    <SourceLine>self.Scroller.PageStep = (self.Viewer.Height)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if (self.Count = 0) then</SourceLine>
+   <SourceLine>if (self.ListCount = 0) then</SourceLine>
    <SourceLine>self.Scroller.Maximum = 0</SourceLine>
    <SourceLine>else</SourceLine>
-   <SourceLine>DIM containerHeight As Integer = self.mContainers(0).Height</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>if (self.Viewer.Height &lt; (self.Count * containerHeight)) then</SourceLine>
-   <SourceLine>self.Scroller.Maximum = ((self.Count * containerHeight) - self.Viewer.Height)</SourceLine>
+   <SourceLine>if (self.FormattedHeight &gt; self.Viewer.Height) then</SourceLine>
+   <SourceLine>self.Scroller.Maximum = (self.FormattedHeight - self.Viewer.Height)</SourceLine>
    <SourceLine>else</SourceLine>
    <SourceLine>self.Scroller.Maximum = 0</SourceLine>
    <SourceLine>end if</SourceLine>
@@ -134,55 +131,6 @@
   <ItemParams>container As ContainerControl, x As Integer, y As Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
- <Method>
-  <ItemName>DeselectAll</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub DeselectAll()</SourceLine>
-   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
-   <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
-   <SourceLine>if (self.mContainers(i) IsA ScrollingGroupRowInterface) then</SourceLine>
-   <SourceLine>ScrollingGroupRowInterface(self.mContainers(i)).IsSelected = FALSE</SourceLine>
-   <SourceLine>end if</SourceLine>
-   <SourceLine>next</SourceLine>
-   <SourceLine>end if</SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams></ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Property>
-  <ItemName>Count</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Count As Integer</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Count As Integer</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
-  <IsShared>0</IsShared>
-  <SetAccessor>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Set</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Set</SourceLine>
-  </SetAccessor>
-  <GetAccessor>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Get</SourceLine>
-   <SourceLine>Return UBound(self.mContainers) + 1</SourceLine>
-   <SourceLine>End Get</SourceLine>
-  </GetAccessor>
- </Property>
  <Property>
   <ItemName>mContainers()</ItemName>
   <Compatibility></Compatibility>
@@ -227,9 +175,15 @@
   <SetAccessor>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Set</SourceLine>
-   <SourceLine>self.DeselectAll</SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
+   <SourceLine>if (self.mContainers(i) IsA ScrollingGroupRowInterface) then</SourceLine>
+   <SourceLine>ScrollingGroupRowInterface(self.mContainers(i)).IsSelected = FALSE</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if (value &lt;&gt; -1) AND (value &lt;= UBound(self.mContainers)) then</SourceLine>
+   <SourceLine>if (value &gt; -1) AND (value &lt;= UBound(self.mContainers)) then</SourceLine>
    <SourceLine>ScrollingGroupRowInterface(self.mContainers(value)).IsSelected = TRUE</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
@@ -242,6 +196,66 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Get</SourceLine>
    <SourceLine>Return self.mListIndex</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>ListCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property ListCount As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ListCount As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return UBound(self.mContainers) + 1</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>FormattedHeight</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property FormattedHeight As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>FormattedHeight As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>DIM returnValue As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
+   <SourceLine>returnValue = returnValue + self.mContainers(i).Height</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return returnValue</SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>
@@ -446,6 +460,11 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>300</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ListIndex</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
