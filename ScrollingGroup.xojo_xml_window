@@ -2,7 +2,7 @@
 <RBProject version="2013r3.2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Window" ID="1255505739">
  <ObjName>ScrollingGroup</ObjName>
- <ObjContainerID>330583064</ObjContainerID>
+ <ObjContainerID>73026898</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>ContainerControl</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -43,11 +43,10 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub AddRow(container As ContainerControl)</SourceLine>
+   <SourceLine>container.EmbedWithin self.Viewer, 0, (self.FormattedHeight - self.Scroller.Value), self.Viewer.Width</SourceLine>
    <SourceLine>self.mContainers.Append container</SourceLine>
-   <SourceLine>container.EmbedWithin self.Viewer, 0, ((UBound(self.mContainers) * container.Height) - self.Scroller.Value), self.Viewer.Width</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>AddHandler container.MouseUp, WeakAddressOf MouseUpHandler</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>self.UpdateScroller</SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -110,18 +109,10 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub MouseUpHandler(container As ContainerControl, x As Integer, y As Integer)</SourceLine>
+   <SourceLine>#pragma Unused x</SourceLine>
+   <SourceLine>#pragma Unused y</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>self.ListIndex = self.mContainers.IndexOf(container)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>' self.DeselectAll</SourceLine>
-   <SourceLine>' </SourceLine>
-   <SourceLine>' if (container IsA ScrollingGroupRowInterface) then</SourceLine>
-   <SourceLine>' ScrollingGroupRowInterface(container).IsSelected = TRUE</SourceLine>
-   <SourceLine>' end if</SourceLine>
-   <SourceLine>' </SourceLine>
-   <SourceLine>' self.Invalidate</SourceLine>
-   <SourceLine>' </SourceLine>
-   <SourceLine>' self.mListIndex = self.mContainers.IndexOf(container)</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -175,18 +166,22 @@
   <SetAccessor>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Set</SourceLine>
+   <SourceLine>DIM top As Integer = (0 - self.Scroller.Value)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
    <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
+   <SourceLine>// update the selection</SourceLine>
    <SourceLine>if (self.mContainers(i) IsA ScrollingGroupRowInterface) then</SourceLine>
-   <SourceLine>ScrollingGroupRowInterface(self.mContainers(i)).IsSelected = FALSE</SourceLine>
+   <SourceLine>ScrollingGroupRowInterface(self.mContainers(i)).IsSelected = (i = value)</SourceLine>
    <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// move the containers incase the height of the selected container changes</SourceLine>
+   <SourceLine>self.mContainers(i).Top = top</SourceLine>
+   <SourceLine>top = top + self.mContainers(i).Height</SourceLine>
    <SourceLine>next</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if (value &gt; -1) AND (value &lt;= UBound(self.mContainers)) then</SourceLine>
-   <SourceLine>ScrollingGroupRowInterface(self.mContainers(value)).IsSelected = TRUE</SourceLine>
-   <SourceLine>end if</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>self.UpdateScroller</SourceLine>
    <SourceLine>self.Invalidate</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>self.mListIndex = value</SourceLine>
@@ -205,7 +200,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property ListCount As Integer</SourceLine>
+   <SourceLine>ListCount As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -231,7 +226,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property FormattedHeight As Integer</SourceLine>
+   <SourceLine>FormattedHeight As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -464,6 +459,16 @@
   </ViewProperty>
   <ViewProperty>
    <ObjName>ListIndex</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ListCount</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FormattedHeight</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
   </ViewProperty>
