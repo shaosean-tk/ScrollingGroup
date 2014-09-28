@@ -56,6 +56,7 @@
    <SourceLine>Sub AddRow(container As ContainerControl)</SourceLine>
    <SourceLine>container.EmbedWithin self.Viewer, 0, (self.FormattedHeight - self.Scroller.Value), self.Viewer.Width</SourceLine>
    <SourceLine>self.mContainers.Append container</SourceLine>
+   <SourceLine>self.mRowTags.Append ""</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>AddHandler container.MouseUp, WeakAddressOf MouseUpHandler</SourceLine>
    <SourceLine></SourceLine>
@@ -126,8 +127,10 @@
    <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
    <SourceLine>for i as Integer = UBound(self.mContainers) DownTo 0</SourceLine>
    <SourceLine>self.mContainers(i).Close</SourceLine>
-   <SourceLine>self.mContainers.Remove i</SourceLine>
    <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>REDIM self.mContainers(-1)</SourceLine>
+   <SourceLine>REDIM self.mRowTags(-1)</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>self.UpdateScroller</SourceLine>
@@ -138,6 +141,25 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RowTag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RowTag(row As Integer, Assigns value As Variant)</SourceLine>
+   <SourceLine>if (UBound(self.mRowTags) &gt; -1) AND (row &lt;= UBound(self.mRowTags)) then</SourceLine>
+   <SourceLine>self.mRowTags(row) = value</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>row As Integer, Assigns value As Variant</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Property>
@@ -269,6 +291,46 @@
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return returnValue</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mRowTags()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mRowTags() As Variant</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mRowTags() As Variant</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>LastIndex</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property LastIndex As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastIndex As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return UBound(self.mContainers)  // we just do this for now as we only do "add"</SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>
