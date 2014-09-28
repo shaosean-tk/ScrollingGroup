@@ -572,7 +572,7 @@
   <PropertyVal Name="LockTop">True</PropertyVal>
   <PropertyVal Name="LockLeft">True</PropertyVal>
   <PropertyVal Name="Height"><Hex bytes="3">333030</Hex></PropertyVal>
-  <PropertyVal Name="Width"><Hex bytes="3">323834</Hex></PropertyVal>
+  <PropertyVal Name="Width"><Hex bytes="3">323835</Hex></PropertyVal>
   <PropertyVal Name="Top"><Hex bytes="1">30</Hex></PropertyVal>
   <PropertyVal Name="Left"><Hex bytes="1">30</Hex></PropertyVal>
   <PropertyVal Name="Scope">2</PropertyVal>
