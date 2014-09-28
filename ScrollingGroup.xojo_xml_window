@@ -142,7 +142,7 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
+  <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>container As ContainerControl, x As Integer, y As Integer</ItemParams>
   <ItemResult></ItemResult>
