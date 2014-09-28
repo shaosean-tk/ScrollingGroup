@@ -97,23 +97,6 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>RowFromXY</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function RowFromXY(x As Integer, y As Integer) As Integer</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>x As Integer, y As Integer</ItemParams>
-  <ItemResult>Integer</ItemResult>
- </Method>
- <Method>
   <ItemName>MouseUpHandler</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
