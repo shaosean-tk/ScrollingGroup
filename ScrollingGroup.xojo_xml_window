@@ -116,6 +116,30 @@
   <ItemParams>container As ContainerControl, x As Integer, y As Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
+ <Method>
+  <ItemName>DeleteAllRows</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DeleteAllRows()</SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = UBound(self.mContainers) DownTo 0</SourceLine>
+   <SourceLine>self.mContainers(i).Close</SourceLine>
+   <SourceLine>self.mContainers.Remove i</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.UpdateScroller</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Property>
   <ItemName>mContainers()</ItemName>
   <Compatibility></Compatibility>
