@@ -36,6 +36,17 @@
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
+ <HookInstance>
+  <ItemName>Resizing</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Resizing()</SourceLine>
+   <SourceLine>self.UpdateScroller</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
  <Method>
   <ItemName>AddRow</ItemName>
   <Compatibility></Compatibility>
