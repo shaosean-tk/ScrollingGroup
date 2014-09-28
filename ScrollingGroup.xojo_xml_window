@@ -149,9 +149,9 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub RowTag(row As Integer, Assigns value As Variant)</SourceLine>
+   <SourceLine>Sub RowTag(row As Integer, Assigns tag As Variant)</SourceLine>
    <SourceLine>if (UBound(self.mRowTags) &gt; -1) AND (row &lt;= UBound(self.mRowTags)) then</SourceLine>
-   <SourceLine>self.mRowTags(row) = value</SourceLine>
+   <SourceLine>self.mRowTags(row) = tag</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -159,8 +159,36 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>row As Integer, Assigns value As Variant</ItemParams>
+  <ItemParams>row As Integer, Assigns tag As Variant</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IndexOf</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IndexOf(tag As Variant) As Integer</SourceLine>
+   <SourceLine>DIM index As Integer = -1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (UBound(self.mRowTags) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = 0 to UBound(self.mRowTags)</SourceLine>
+   <SourceLine>if (tag = self.mRowTags(i)) then</SourceLine>
+   <SourceLine>index = i</SourceLine>
+   <SourceLine>exit for i</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return index</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>tag As Variant</ItemParams>
+  <ItemResult>Integer</ItemResult>
  </Method>
  <Property>
   <ItemName>mContainers()</ItemName>
