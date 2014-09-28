@@ -47,6 +47,36 @@
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
+ <HookInstance>
+  <ItemName>Activate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Activate()</SourceLine>
+   <SourceLine>self.mIsActive = TRUE</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent Activated</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.Invalidate</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>Deactivate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Deactivate()</SourceLine>
+   <SourceLine>self.mIsActive = FALSE</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>RaiseEvent Deactivated</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.Invalidate</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
  <Method>
   <ItemName>AddRow</ItemName>
   <Compatibility></Compatibility>
@@ -190,6 +220,22 @@
   <ItemParams>tag As Variant</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
+ <Hook>
+  <ItemName>Activated</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>Deactivated</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
  <Property>
   <ItemName>mContainers()</ItemName>
   <Compatibility></Compatibility>
@@ -359,6 +405,46 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Get</SourceLine>
    <SourceLine>Return UBound(self.mContainers)  // we just do this for now as we only do "add"</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>mIsActive</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mIsActive As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mIsActive As Boolean</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>IsActive</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Property IsActive As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>IsActive As Boolean</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>Return self.mIsActive</SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>
@@ -579,6 +665,16 @@
    <ObjName>FormattedHeight</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LastIndex</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>IsActive</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
   </ViewProperty>
  </ViewBehavior>
  <ControlBehavior>
