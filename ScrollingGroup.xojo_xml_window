@@ -86,7 +86,6 @@
    <SourceLine>Sub AddRow(container As ContainerControl)</SourceLine>
    <SourceLine>container.EmbedWithin self.Viewer, 0, (self.FormattedHeight - self.Scroller.Value), self.Viewer.Width</SourceLine>
    <SourceLine>self.mContainers.Append container</SourceLine>
-   <SourceLine>self.mRowTags.Append ""</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>AddHandler container.MouseUp, WeakAddressOf MouseUpHandler</SourceLine>
    <SourceLine></SourceLine>
@@ -160,7 +159,6 @@
    <SourceLine>next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>REDIM self.mContainers(-1)</SourceLine>
-   <SourceLine>REDIM self.mRowTags(-1)</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>self.UpdateScroller</SourceLine>
@@ -180,9 +178,11 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub RowTag(row As Integer, Assigns tag As Variant)</SourceLine>
-   <SourceLine>if (UBound(self.mRowTags) &gt; -1) AND (row &lt;= UBound(self.mRowTags)) then</SourceLine>
-   <SourceLine>self.mRowTags(row) = tag</SourceLine>
-   <SourceLine>end if</SourceLine>
+   <SourceLine>try</SourceLine>
+   <SourceLine>ScrollingGroupRowInterface(self.mContainers(row)).RowTag = tag</SourceLine>
+   <SourceLine>catch</SourceLine>
+   <SourceLine>// do nothing</SourceLine>
+   <SourceLine>end try</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -199,18 +199,18 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function IndexOf(tag As Variant) As Integer</SourceLine>
-   <SourceLine>DIM index As Integer = -1</SourceLine>
+   <SourceLine>DIM returnValue As Integer = -1</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if (UBound(self.mRowTags) &gt; -1) then</SourceLine>
-   <SourceLine>for i as Integer = 0 to UBound(self.mRowTags)</SourceLine>
-   <SourceLine>if (tag = self.mRowTags(i)) then</SourceLine>
-   <SourceLine>index = i</SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
+   <SourceLine>if (self.mContainers(i) IsA ScrollingGroupRowInterface) AND (ScrollingGroupRowInterface(self.mContainers(i)).RowTag = tag) then</SourceLine>
+   <SourceLine>returnValue = i</SourceLine>
    <SourceLine>exit for i</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine>next</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Return index</SourceLine>
+   <SourceLine>Return returnValue</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -219,6 +219,31 @@
   <IsShared>0</IsShared>
   <ItemParams>tag As Variant</ItemParams>
   <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RowTag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function RowTag(row As Integer) As Variant</SourceLine>
+   <SourceLine>DIM returnValue As Variant = Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>try</SourceLine>
+   <SourceLine>returnValue = ScrollingGroupRowInterface(self.mContainers(row)).RowTag()</SourceLine>
+   <SourceLine>catch</SourceLine>
+   <SourceLine>// do nothing</SourceLine>
+   <SourceLine>Finally</SourceLine>
+   <SourceLine>Return returnValue</SourceLine>
+   <SourceLine>end try</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>row As Integer</ItemParams>
+  <ItemResult>Variant</ItemResult>
  </Method>
  <Hook>
   <ItemName>Activated</ItemName>
@@ -247,20 +272,6 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>mContainers() As ContainerControl</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
- <Property>
-  <ItemName>mListIndex</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>mListIndex As Integer</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>mListIndex As Integer</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
@@ -297,14 +308,23 @@
    <SourceLine></SourceLine>
    <SourceLine>self.UpdateScroller</SourceLine>
    <SourceLine>self.Invalidate</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>self.mListIndex = value</SourceLine>
    <SourceLine>End Set</SourceLine>
   </SetAccessor>
   <GetAccessor>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Get</SourceLine>
-   <SourceLine>Return self.mListIndex</SourceLine>
+   <SourceLine>DIM returnValue As Integer = -1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
+   <SourceLine>if (self.mContainers(i) IsA ScrollingGroupRowInterface) AND (ScrollingGroupRowInterface(self.mContainers(i)).IsSelected) then</SourceLine>
+   <SourceLine>returnValue = i</SourceLine>
+   <SourceLine>exit for</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return returnValue</SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>
@@ -367,20 +387,6 @@
    <SourceLine>Return returnValue</SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
- </Property>
- <Property>
-  <ItemName>mRowTags()</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>mRowTags() As Variant</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>mRowTags() As Variant</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
-  <IsShared>0</IsShared>
  </Property>
  <Property>
   <ItemName>LastIndex</ItemName>
