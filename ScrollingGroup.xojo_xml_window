@@ -342,6 +342,21 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function KeyDown(key As String) As Boolean</SourceLine>
+   <SourceLine>DIM index As Integer = self.ListIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>select case Asc(key)</SourceLine>
+   <SourceLine>case 28  // left arrow</SourceLine>
+   <SourceLine>case 29  // right arrow</SourceLine>
+   <SourceLine>case 30  // up arrow</SourceLine>
+   <SourceLine>if (index &gt; -1) then</SourceLine>
+   <SourceLine>self.ListIndex = index - 1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>case 31  // down arrow</SourceLine>
+   <SourceLine>if (index &lt; UBound(self.mContainers)) then</SourceLine>
+   <SourceLine>self.ListIndex = index + 1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end select</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return RaiseEvent KeyDown(key)</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
