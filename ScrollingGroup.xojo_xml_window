@@ -99,6 +99,19 @@
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
+ <HookInstance>
+  <ItemName>GotFocus</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub GotFocus()</SourceLine>
+   <SourceLine>if (self.ListIndex &lt;&gt; -1) then</SourceLine>
+   <SourceLine>self.mContainers(self.ListIndex).SetFocus</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
  <Method>
   <ItemName>AddRow</ItemName>
   <Compatibility></Compatibility>
@@ -160,6 +173,7 @@
    <SourceLine>#pragma Unused y</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>self.ListIndex = self.mContainers.IndexOf(container)</SourceLine>
+   <SourceLine>container.SetFocus</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -342,20 +356,17 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function KeyDown(key As String) As Boolean</SourceLine>
-   <SourceLine>DIM index As Integer = self.ListIndex</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>select case Asc(key)</SourceLine>
    <SourceLine>case 28  // left arrow</SourceLine>
    <SourceLine>case 29  // right arrow</SourceLine>
    <SourceLine>case 30  // up arrow</SourceLine>
-   <SourceLine>if (index &gt; -1) then</SourceLine>
-   <SourceLine>self.ListIndex = index - 1</SourceLine>
-   <SourceLine>end if</SourceLine>
+   <SourceLine>self.MoveSelectionUp</SourceLine>
    <SourceLine>case 31  // down arrow</SourceLine>
-   <SourceLine>if (index &lt; UBound(self.mContainers)) then</SourceLine>
-   <SourceLine>self.ListIndex = index + 1</SourceLine>
-   <SourceLine>end if</SourceLine>
+   <SourceLine>self.MoveSelectionDown</SourceLine>
    <SourceLine>end select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return RaiseEvent KeyDown(key)</SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -366,6 +377,74 @@
   <IsShared>0</IsShared>
   <ItemParams>key As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MoveSelectionDown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub MoveSelectionDown()</SourceLine>
+   <SourceLine>if (self.ListIndex &lt; UBound(self.mContainers)) then</SourceLine>
+   <SourceLine>self.ListIndex = self.ListIndex + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// if the bottom of the selected row is not visible, scroll</SourceLine>
+   <SourceLine>DIM formattedHeightOfRowsUpToSelectedRow As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = 0 to self.ListIndex</SourceLine>
+   <SourceLine>formattedHeightOfRowsUpToSelectedRow = formattedHeightOfRowsUpToSelectedRow + self.mContainers(i).Height</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (formattedHeightOfRowsUpToSelectedRow &gt; self.Height) then</SourceLine>
+   <SourceLine>self.Scroller.Value = (formattedHeightOfRowsUpToSelectedRow - self.Height)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MoveSelectionUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub MoveSelectionUp()</SourceLine>
+   <SourceLine>if (self.ListIndex &gt; 0) then</SourceLine>
+   <SourceLine>self.ListIndex = self.ListIndex - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (self.mContainers(self.ListIndex).Top &lt; 0) then</SourceLine>
+   <SourceLine>self.Scroller.Value = self.Scroller.Value + self.mContainers(self.ListIndex).Top  // top will be a negative value so this will subtract</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' // if the top of the selected row is not visible, scroll</SourceLine>
+   <SourceLine>' DIM formattedHeightOfRowsBeforeSelectedRow As Integer</SourceLine>
+   <SourceLine>' </SourceLine>
+   <SourceLine>' if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>' for i as Integer = 0 to (self.ListIndex - 1)</SourceLine>
+   <SourceLine>' formattedHeightOfRowsBeforeSelectedRow = formattedHeightOfRowsBeforeSelectedRow + self.mContainers(i).Height</SourceLine>
+   <SourceLine>' next</SourceLine>
+   <SourceLine>' end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' if (formattedHeightOfRowsBeforeSelectedRow &lt; self.Height) then</SourceLine>
+   <SourceLine>' self.Scroller.Value = (formattedHeightOfRowsBeforeSelectedRow - self.Height)</SourceLine>
+   <SourceLine>' end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Hook>
   <ItemName>Activated</ItemName>
@@ -619,7 +698,7 @@
  <PropertyVal Name="Transparent">True</PropertyVal>
  <PropertyVal Name="EraseBackground">True</PropertyVal>
  <PropertyVal Name="AcceptTabs">True</PropertyVal>
- <PropertyVal Name="AcceptFocus">False</PropertyVal>
+ <PropertyVal Name="AcceptFocus">True</PropertyVal>
  <PropertyVal Name="Backdrop">0</PropertyVal>
  <PropertyVal Name="BackColor"><Hex bytes="8">3136373737323135</Hex></PropertyVal>
  <PropertyVal Name="HasBackColor">False</PropertyVal>
