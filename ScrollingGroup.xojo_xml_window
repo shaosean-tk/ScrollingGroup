@@ -32,7 +32,7 @@
    <SourceLine>#pragma Unused X</SourceLine>
    <SourceLine>#pragma Unused Y</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>self.ListIndex = -1</SourceLine>
+   <SourceLine>self.ListIndex = -1  // this will cause the selection to be removed when clicking in the dead space of the control</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
@@ -43,7 +43,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Resizing()</SourceLine>
-   <SourceLine>self.UpdateScroller</SourceLine>
+   <SourceLine>self.Invalidate</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
@@ -77,6 +77,28 @@
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
  </HookInstance>
+ <HookInstance>
+  <ItemName>KeyDown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function KeyDown(Key As String) As Boolean</SourceLine>
+   <SourceLine>Return RaiseEvent KeyDown(Key)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>KeyUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub KeyUp(Key As String)</SourceLine>
+   <SourceLine>RaiseEvent KeyUp Key</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
  <Method>
   <ItemName>AddRow</ItemName>
   <Compatibility></Compatibility>
@@ -89,7 +111,8 @@
    <SourceLine></SourceLine>
    <SourceLine>AddHandler container.MouseUp, WeakAddressOf MouseUpHandler</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>self.UpdateScroller</SourceLine>
+   <SourceLine>self.Invalidate</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -161,7 +184,7 @@
    <SourceLine>REDIM self.mContainers(-1)</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>self.UpdateScroller</SourceLine>
+   <SourceLine>self.Invalidate</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -233,7 +256,7 @@
    <SourceLine>returnValue = ScrollingGroupRowInterface(self.mContainers(row)).RowTag()</SourceLine>
    <SourceLine>catch</SourceLine>
    <SourceLine>// do nothing</SourceLine>
-   <SourceLine>Finally</SourceLine>
+   <SourceLine>finally</SourceLine>
    <SourceLine>Return returnValue</SourceLine>
    <SourceLine>end try</SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -244,6 +267,90 @@
   <IsShared>0</IsShared>
   <ItemParams>row As Integer</ItemParams>
   <ItemResult>Variant</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RemoveRow</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RemoveRow(row As Integer)</SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) AND (row &lt;= UBound(self.mContainers)) then</SourceLine>
+   <SourceLine>self.mContainers(row).Close</SourceLine>
+   <SourceLine>self.mContainers.Remove row</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.Invalidate</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>row As Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Invalidate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Invalidate(eraseBackground As Boolean = True)</SourceLine>
+   <SourceLine>DIM top As Integer = (0 - self.Scroller.Value)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
+   <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
+   <SourceLine>self.mContainers(i).Top = top</SourceLine>
+   <SourceLine>top = top + self.mContainers(i).Height</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.UpdateScroller</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Super.Invalidate eraseBackground</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>eraseBackground As Boolean = True</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>KeyUp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub KeyUp(key As String)</SourceLine>
+   <SourceLine>RaiseEvent KeyUp key</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>key As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>KeyDown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function KeyDown(key As String) As Boolean</SourceLine>
+   <SourceLine>Return RaiseEvent KeyDown(key)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>key As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
  </Method>
  <Hook>
   <ItemName>Activated</ItemName>
@@ -260,6 +367,22 @@
   <SystemFlags>0</SystemFlags>
   <ItemParams></ItemParams>
   <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>KeyUp</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>key As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>KeyDown</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>key As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
  </Hook>
  <Property>
   <ItemName>mContainers()</ItemName>
@@ -291,22 +414,14 @@
   <SetAccessor>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Set</SourceLine>
-   <SourceLine>DIM top As Integer = (0 - self.Scroller.Value)</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>if (UBound(self.mContainers) &gt; -1) then</SourceLine>
    <SourceLine>for i as Integer = 0 to UBound(self.mContainers)</SourceLine>
-   <SourceLine>// update the selection</SourceLine>
    <SourceLine>if (self.mContainers(i) IsA ScrollingGroupRowInterface) then</SourceLine>
-   <SourceLine>ScrollingGroupRowInterface(self.mContainers(i)).IsSelected = (i = value)</SourceLine>
+   <SourceLine>ScrollingGroupRowInterface(self.mContainers(i)).IsSelected = (i = value)  // update the selection</SourceLine>
    <SourceLine>end if</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// move the containers incase the height of the selected container changes</SourceLine>
-   <SourceLine>self.mContainers(i).Top = top</SourceLine>
-   <SourceLine>top = top + self.mContainers(i).Height</SourceLine>
    <SourceLine>next</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>self.UpdateScroller</SourceLine>
    <SourceLine>self.Invalidate</SourceLine>
    <SourceLine>End Set</SourceLine>
   </SetAccessor>
@@ -394,7 +509,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property LastIndex As Integer</SourceLine>
+   <SourceLine>LastIndex As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -434,7 +549,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Property IsActive As Boolean</SourceLine>
+   <SourceLine>IsActive As Boolean</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -451,6 +566,38 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Get</SourceLine>
    <SourceLine>Return self.mIsActive</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <Property>
+  <ItemName>SelectedContainer</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>SelectedContainer As ContainerControl</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>SelectedContainer As ContainerControl</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>DIM returnValue As ContainerControl</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (UBound(self.mContainers) &gt; -1) AND (self.ListIndex &gt; -1) then</SourceLine>
+   <SourceLine>returnValue = self.mContainers(self.ListIndex)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return returnValue</SourceLine>
    <SourceLine>End Get</SourceLine>
   </GetAccessor>
  </Property>
@@ -707,7 +854,13 @@
    <ItemSource>
     <TextEncoding>134217984</TextEncoding>
     <SourceLine>Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean</SourceLine>
+    <SourceLine>#pragma Unused X</SourceLine>
+    <SourceLine>#pragma Unused Y</SourceLine>
+    <SourceLine>#pragma Unused deltaX</SourceLine>
+    <SourceLine></SourceLine>
     <SourceLine>Me.Value = Me.Value + deltaY</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>Return kEventHandled</SourceLine>
     <SourceLine>End Function</SourceLine>
    </ItemSource>
   </HookInstance>
@@ -721,7 +874,35 @@
    <ItemSource>
     <TextEncoding>134217984</TextEncoding>
     <SourceLine>Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean</SourceLine>
+    <SourceLine>#pragma Unused X</SourceLine>
+    <SourceLine>#pragma Unused Y</SourceLine>
+    <SourceLine>#pragma Unused deltaX</SourceLine>
+    <SourceLine></SourceLine>
     <SourceLine>self.Scroller.Value = self.Scroller.Value + deltaY</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>Return kEventHandled</SourceLine>
+    <SourceLine>End Function</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>KeyUp</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub KeyUp(Key As String)</SourceLine>
+    <SourceLine>self.KeyUp Key</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>KeyDown</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Function KeyDown(Key As String) As Boolean</SourceLine>
+    <SourceLine>Return self.KeyDown(Key)</SourceLine>
     <SourceLine>End Function</SourceLine>
    </ItemSource>
   </HookInstance>
@@ -769,7 +950,7 @@
   <PropertyVal Name="AcceptTabs">False</PropertyVal>
   <PropertyVal Name="AcceptFocus">False</PropertyVal>
   <PropertyVal Name="Backdrop">0</PropertyVal>
-  <PropertyVal Name="UseFocusRing">True</PropertyVal>
+  <PropertyVal Name="UseFocusRing">False</PropertyVal>
   <PropertyVal Name="Enabled">True</PropertyVal>
   <PropertyVal Name="AutoDeactivate">True</PropertyVal>
   <PropertyVal Name="HelpTag"></PropertyVal>
