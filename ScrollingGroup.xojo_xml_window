@@ -871,9 +871,47 @@
     <SourceLine>Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean</SourceLine>
     <SourceLine>#pragma Unused X</SourceLine>
     <SourceLine>#pragma Unused Y</SourceLine>
-    <SourceLine>#pragma Unused deltaX</SourceLine>
     <SourceLine></SourceLine>
-    <SourceLine>Me.Value = Me.Value + deltaY</SourceLine>
+    <SourceLine>/// from Xojo forums by Thom McGrath</SourceLine>
+    <SourceLine>/// https://forum.xojo.com/10413-canvas-mousewheel-and-native-feeling-delta/p1#p74408</SourceLine>
+    <SourceLine>Dim CorrectX As Single = deltaX</SourceLine>
+    <SourceLine>Dim CorrectY As Single = deltaY</SourceLine>
+    <SourceLine>Dim UsesPixelDeltas As Boolean</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>#if TargetCocoa</SourceLine>
+    <SourceLine>Try</SourceLine>
+    <SourceLine>Declare Function objc_getClass Lib "Cocoa" (aClassName As CString) As Ptr</SourceLine>
+    <SourceLine>Declare Function sel_registerName Lib "/usr/lib/libobjc.dylib" (Name As CString) As Ptr</SourceLine>
+    <SourceLine>Declare Function GetSharedApplication Lib "Cocoa" Selector "sharedApplication" (Target As Ptr) As Ptr</SourceLine>
+    <SourceLine>Declare Function GetCurrentEvent Lib "Cocoa" Selector "currentEvent" (Target As Ptr) As Ptr</SourceLine>
+    <SourceLine>Declare Function RespondsToSelector Lib "Cocoa" Selector "respondsToSelector:" (Target As Ptr, Sel As Ptr) As Boolean</SourceLine>
+    <SourceLine>Declare Function HasPreciseScrollingDeltas Lib "Cocoa" Selector "hasPreciseScrollingDeltas" (Target As Ptr) As Boolean</SourceLine>
+    <SourceLine>Declare Function ScrollingDeltaX Lib "Cocoa" Selector "scrollingDeltaX" (Target As Ptr) As Single</SourceLine>
+    <SourceLine>Declare Function ScrollingDeltaY Lib "Cocoa" Selector "scrollingDeltaY" (Target As Ptr) As Single</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>Dim NSApplication As Ptr = objc_getClass("NSApplication")</SourceLine>
+    <SourceLine>If NSApplication &lt;&gt; Nil Then</SourceLine>
+    <SourceLine>Dim SharedApplication As Ptr = GetSharedApplication(NSApplication)</SourceLine>
+    <SourceLine>If SharedApplication &lt;&gt; Nil Then</SourceLine>
+    <SourceLine>Dim EventObject As Ptr = GetCurrentEvent(SharedApplication)</SourceLine>
+    <SourceLine>If EventObject &lt;&gt; Nil Then</SourceLine>
+    <SourceLine>If RespondsToSelector(EventObject,sel_registerName("hasPreciseScrollingDeltas")) Then</SourceLine>
+    <SourceLine>UsesPixelDeltas = HasPreciseScrollingDeltas(EventObject)</SourceLine>
+    <SourceLine>CorrectX = ScrollingDeltaX(EventObject) * -1</SourceLine>
+    <SourceLine>CorrectY = ScrollingDeltaY(EventObject) * -1</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>Catch Err As RuntimeException</SourceLine>
+    <SourceLine>UsesPixelDeltas = False</SourceLine>
+    <SourceLine>CorrectX = DeltaX * -1</SourceLine>
+    <SourceLine>CorrectY = DeltaY * -1</SourceLine>
+    <SourceLine>End Try</SourceLine>
+    <SourceLine>#endif</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>self.Scroller.Value = self.Scroller.Value + (CorrectY) - (CorrectX)</SourceLine>
+    <SourceLine>///</SourceLine>
     <SourceLine></SourceLine>
     <SourceLine>Return kEventHandled</SourceLine>
     <SourceLine>End Function</SourceLine>
@@ -891,9 +929,47 @@
     <SourceLine>Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean</SourceLine>
     <SourceLine>#pragma Unused X</SourceLine>
     <SourceLine>#pragma Unused Y</SourceLine>
-    <SourceLine>#pragma Unused deltaX</SourceLine>
     <SourceLine></SourceLine>
-    <SourceLine>self.Scroller.Value = self.Scroller.Value + deltaY</SourceLine>
+    <SourceLine>/// from Xojo forums by Thom McGrath</SourceLine>
+    <SourceLine>/// https://forum.xojo.com/10413-canvas-mousewheel-and-native-feeling-delta/p1#p74408</SourceLine>
+    <SourceLine>Dim CorrectX As Single = deltaX</SourceLine>
+    <SourceLine>Dim CorrectY As Single = deltaY</SourceLine>
+    <SourceLine>Dim UsesPixelDeltas As Boolean</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>#if TargetCocoa</SourceLine>
+    <SourceLine>Try</SourceLine>
+    <SourceLine>Declare Function objc_getClass Lib "Cocoa" (aClassName As CString) As Ptr</SourceLine>
+    <SourceLine>Declare Function sel_registerName Lib "/usr/lib/libobjc.dylib" (Name As CString) As Ptr</SourceLine>
+    <SourceLine>Declare Function GetSharedApplication Lib "Cocoa" Selector "sharedApplication" (Target As Ptr) As Ptr</SourceLine>
+    <SourceLine>Declare Function GetCurrentEvent Lib "Cocoa" Selector "currentEvent" (Target As Ptr) As Ptr</SourceLine>
+    <SourceLine>Declare Function RespondsToSelector Lib "Cocoa" Selector "respondsToSelector:" (Target As Ptr, Sel As Ptr) As Boolean</SourceLine>
+    <SourceLine>Declare Function HasPreciseScrollingDeltas Lib "Cocoa" Selector "hasPreciseScrollingDeltas" (Target As Ptr) As Boolean</SourceLine>
+    <SourceLine>Declare Function ScrollingDeltaX Lib "Cocoa" Selector "scrollingDeltaX" (Target As Ptr) As Single</SourceLine>
+    <SourceLine>Declare Function ScrollingDeltaY Lib "Cocoa" Selector "scrollingDeltaY" (Target As Ptr) As Single</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>Dim NSApplication As Ptr = objc_getClass("NSApplication")</SourceLine>
+    <SourceLine>If NSApplication &lt;&gt; Nil Then</SourceLine>
+    <SourceLine>Dim SharedApplication As Ptr = GetSharedApplication(NSApplication)</SourceLine>
+    <SourceLine>If SharedApplication &lt;&gt; Nil Then</SourceLine>
+    <SourceLine>Dim EventObject As Ptr = GetCurrentEvent(SharedApplication)</SourceLine>
+    <SourceLine>If EventObject &lt;&gt; Nil Then</SourceLine>
+    <SourceLine>If RespondsToSelector(EventObject,sel_registerName("hasPreciseScrollingDeltas")) Then</SourceLine>
+    <SourceLine>UsesPixelDeltas = HasPreciseScrollingDeltas(EventObject)</SourceLine>
+    <SourceLine>CorrectX = ScrollingDeltaX(EventObject) * -1</SourceLine>
+    <SourceLine>CorrectY = ScrollingDeltaY(EventObject) * -1</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>Catch Err As RuntimeException</SourceLine>
+    <SourceLine>UsesPixelDeltas = False</SourceLine>
+    <SourceLine>CorrectX = DeltaX * -1</SourceLine>
+    <SourceLine>CorrectY = DeltaY * -1</SourceLine>
+    <SourceLine>End Try</SourceLine>
+    <SourceLine>#endif</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>self.Scroller.Value = self.Scroller.Value + (CorrectY) - (CorrectX)</SourceLine>
+    <SourceLine>///</SourceLine>
     <SourceLine></SourceLine>
     <SourceLine>Return kEventHandled</SourceLine>
     <SourceLine>End Function</SourceLine>
