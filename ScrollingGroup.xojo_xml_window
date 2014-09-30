@@ -992,7 +992,7 @@
     <SourceLine>self.Scroller.Value = self.Scroller.Value + (CorrectY) - (CorrectX)</SourceLine>
     <SourceLine>///</SourceLine>
     <SourceLine></SourceLine>
-    <SourceLine>Return kEventHandled</SourceLine>
+    <SourceLine>Return TRUE</SourceLine>
     <SourceLine>End Function</SourceLine>
    </ItemSource>
   </HookInstance>
@@ -1050,7 +1050,7 @@
     <SourceLine>self.Scroller.Value = self.Scroller.Value + (CorrectY) - (CorrectX)</SourceLine>
     <SourceLine>///</SourceLine>
     <SourceLine></SourceLine>
-    <SourceLine>Return kEventHandled</SourceLine>
+    <SourceLine>Return TRUE</SourceLine>
     <SourceLine>End Function</SourceLine>
    </ItemSource>
   </HookInstance>
