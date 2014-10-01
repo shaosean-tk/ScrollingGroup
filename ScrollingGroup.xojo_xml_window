@@ -142,7 +142,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub UpdateScroller()</SourceLine>
-   <SourceLine>self.Scroller.PageStep = (self.Viewer.Height)</SourceLine>
+   <SourceLine>self.Scroller.PageStep = self.Viewer.Height</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>if (self.ListCount = 0) then</SourceLine>
    <SourceLine>self.Scroller.Maximum = 0</SourceLine>
